@@ -35,14 +35,25 @@ EmpMS is a full-stack Employee Management System built using Angular for the fro
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js and Angular CLI
+- Visual Studio
+- Node.js
 - .NET 8 SDK
 - SQL Server
 - Git
+- SSMS
 
 ### Setup Instructions
 
 #### 1. Clone the repository
 ```bash
 git clone https://github.com/Nitin-Rana-CTS/EmpMS.git
-cd EmpMS
+```
+#### 2. Setup dependencies for backend
+<!-- - Microsoft.EntityFrameworkCore -->
+- Microsoft.EntityFrameworkCore.SqlServer
+- Microsoft.EntityFrameworkCore.Tools
+- Microsoft.AspNetCore.Authentication.JwtBearer
+- Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+- dotnet list package --include-transitive
+
