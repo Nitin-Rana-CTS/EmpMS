@@ -2,16 +2,16 @@
 
 #nullable disable
 
-namespace backend.Migrations.AppDb
+namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate_App : Migration
+    public partial class first_app : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Employees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -23,7 +23,7 @@ namespace backend.Migrations.AppDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                 });
         }
 
@@ -31,7 +31,7 @@ namespace backend.Migrations.AppDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Employees");
         }
     }
 }

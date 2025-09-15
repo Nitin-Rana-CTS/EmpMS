@@ -88,6 +88,11 @@ git clone https://github.com/Nitin-Rana-CTS/EmpMS.git
 );
 builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AuthDbConnection"))
+    .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning)) // to ignore model change warnings
 );
 
+
+#### 3. Connect to SSMS
+- enter server name : (localdb)\EMSLocalDBInstance
+- use windows authentication
 
