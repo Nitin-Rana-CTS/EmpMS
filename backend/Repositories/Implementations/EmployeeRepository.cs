@@ -16,33 +16,20 @@ namespace backend.Repositories.Implementations
             _appDbContext = context;
         }
 
-
-        public async Task<List<Employee>> GetAllAsync() =>
-                await _appDbContext.Employees.ToListAsync();
-
-
-        public async Task AddAsync(Employee employee)
+        public async Task<Employee> GetByEmailAsync(string email)
         {
-            _appDbContext.Employees.Add(employee);
-            await _appDbContext.SaveChangesAsync();
-        }
 
+              return  await _appDbContext.Employees.FirstOrDefaultAsync(e => e.Email == email);
+        }
         public async Task UpdateAsync(Employee employee)
         {
             _appDbContext.Employees.Update(employee);
             await _appDbContext.SaveChangesAsync();
         }
-
-
-        public async Task DeleteAsync(int id)
+        public async Task AddAsync(Employee employee)
         {
-            var employee = await _appDbContext.Employees.FindAsync(id);
-            if (employee != null)
-            {
-                _appDbContext.Employees.Remove(employee);
-                await _appDbContext.SaveChangesAsync();
-            }
+            await _appDbContext.Employees.AddAsync(employee);
+            await _appDbContext.SaveChangesAsync();
         }
-
     }
 }

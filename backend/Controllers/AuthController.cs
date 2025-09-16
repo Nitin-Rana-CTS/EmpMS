@@ -43,30 +43,5 @@ namespace backend.Controllers
             }
             return Unauthorized("Invalid email or password");
         }
-
-
-        [HttpGet]
-        [Route("onlyAuthorizeSayHi")]
-        [Authorize]
-        public IActionResult AuthorizeHiOnly()
-        {
-            return Ok("EMPLOYEE Says Hii");
-        }
-
-        [HttpGet]
-        [Route("onlyEmpSayHi")]
-        [Authorize(Roles = "Employee")]
-        public IActionResult EmployeeHiOnly()
-        {
-            return Ok("EMPLOYEE Says Hii");
-        }
-
-        [HttpGet]
-        [Route("onlyAdminSayHi")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult AdminHiOnly()
-        {
-            return Ok("EMPLOYEE Says Hii");
-        }
     }
 }
