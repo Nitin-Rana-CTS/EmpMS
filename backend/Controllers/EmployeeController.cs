@@ -1,5 +1,6 @@
 ﻿using backend.Data;
 using backend.Models;
+using backend.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +11,11 @@ namespace backend.Controllers
     public class EmployeeController : ControllerBase
     {
 
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _appDbContext;
 
         public EmployeeController(AppDbContext context)
         {
-            _context = context;
+            _appDbContext = context;
         }
 
         [HttpGet]
@@ -34,7 +35,7 @@ namespace backend.Controllers
         [Route("allProfiles")]
         public IActionResult GetAllProfiles()
         {
-            var lst = _context.Employees.ToList();
+            var lst = _appDbContext.Employees.ToList();
             return Ok(lst);
         }
 
@@ -48,8 +49,8 @@ namespace backend.Controllers
             user.Address = "none";
             user.Phone = "1024";
 
-            _context.Employees.Add(user);
-            await _context.SaveChangesAsync();
+            _appDbContext.Employees.Add(user);
+            await _appDbContext.SaveChangesAsync();
 
             return Ok(new { Message = "User added successfully" });
         }

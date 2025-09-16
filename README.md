@@ -92,7 +92,15 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
 );
 
 
-#### 3. Connect to SSMS
+#### 4. Connect to SSMS
 - enter server name : (localdb)\EMSLocalDBInstance
 - use windows authentication
 
+#### 5. 🔐 Identity Configuration
+
+To enable user and role management along with secure token generation (e.g., for password reset, email confirmation), the following Identity setup is used (not the AddIdentityCore):
+
+```csharp
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AuthDbContext>()
+    .AddDefaultTokenProviders();

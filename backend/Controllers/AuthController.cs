@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using backend.Models.Dtos.Employee;
+using backend.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -8,5 +11,62 @@ namespace backend.Controllers
     public class AuthController : ControllerBase
     {
 
+        private readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
+
+
+
+        [HttpPost]
+        [Route("employeeRegister")]
+        public async Task<IActionResult> EmployeeRegister([FromBody] EmployeeRegisterRequestDto request)
+        {
+            var result = await _authService.EmployeeRegister(request);
+            if (result.Succeeded)
+            {
+                return Ok("Employee registered successfully");
+            }
+            return BadRequest("Employee registration failed");
+        }
+
+        [HttpPost]
+        [Route("employeeLogin")]
+        public async Task<IActionResult> EmployeeLogin([FromBody] EmployeeLoginRequestDto request)
+        {
+            var result = await _authService.EmployeeLogin(request);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return Unauthorized("Invalid email or password");
+        }
+
+
+        [HttpGet]
+        [Route("onlyAuthorizeSayHi")]
+        [Authorize]
+        public IActionResult AuthorizeHiOnly()
+        {
+            return Ok("EMPLOYEE Says Hii");
+        }
+
+        [HttpGet]
+        [Route("onlyEmpSayHi")]
+        [Authorize(Roles = "Employee")]
+        public IActionResult EmployeeHiOnly()
+        {
+            return Ok("EMPLOYEE Says Hii");
+        }
+
+        [HttpGet]
+        [Route("onlyAdminSayHi")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminHiOnly()
+        {
+            return Ok("EMPLOYEE Says Hii");
+        }
     }
 }
