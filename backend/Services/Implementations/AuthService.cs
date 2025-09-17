@@ -4,6 +4,7 @@ using backend.Models.Dtos.Employee;
 using Microsoft.AspNetCore.Identity;
 using backend.Models.Entities;
 using backend.Data;
+using backend.Models.Dtos.Admin;
 
 namespace backend.Services.Implementations
 {
@@ -43,8 +44,8 @@ namespace backend.Services.Implementations
                     employee.Address = "none";
                     employee.Phone = "none";
 
-                    await _employeeRepository.AddAsync(employee);
-                    await _appDbContext.SaveChangesAsync();
+                    var isAdded = await _employeeRepository.AddAsync(employee);
+                    if (!isAdded) return null;
                 }
             }
             return result;
@@ -62,6 +63,25 @@ namespace backend.Services.Implementations
                     var jwtToken = _tokenService.CreateToken(user.Email, roles.ToList());
 
                     return new EmployeeLoginResponseDto
+                    {
+                        token = jwtToken
+                    };
+                }
+            }
+            return null;
+        }
+        public async Task<AdminLoginResponseDto> AdminLogin(AdminLoginRequestDto request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user != null)
+            {
+                var isCorrectPassword = await _userManager.CheckPasswordAsync(user, request.Password);
+                if (isCorrectPassword)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    var jwtToken = _tokenService.CreateToken(user.Email, roles.ToList());
+
+                    return new AdminLoginResponseDto
                     {
                         token = jwtToken
                     };

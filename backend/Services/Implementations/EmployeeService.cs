@@ -43,7 +43,8 @@ namespace backend.Services.Implementations
             employee.Address = request.Address;
             employee.Phone = request.Phone;
 
-            await _employeeRepository.UpdateAsync(employee);
+            var isUpdated = await _employeeRepository.UpdateAsync(employee);
+            if (!isUpdated) return false;
             return true;
         }
 

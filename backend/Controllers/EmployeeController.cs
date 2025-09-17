@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/employees")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("getMyProfile")]
+        [Route("me")]
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> GetMyProfile()
         {
@@ -42,7 +42,7 @@ namespace backend.Controllers
         }
 
         [HttpPut]
-        [Route("updateMyProfile")]
+        [Route("me")]
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> UpdateMyProfile([FromBody] EmployeeUpdateMyProfileRequestDto request)
         {

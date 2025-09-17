@@ -1,4 +1,5 @@
-﻿using backend.Models.Dtos.Employee;
+﻿using backend.Models.Dtos.Admin;
+using backend.Models.Dtos.Employee;
 using backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace backend.Controllers
 
 
         [HttpPost]
-        [Route("employeeRegister")]
+        [Route("employee/register")]
         public async Task<IActionResult> EmployeeRegister([FromBody] EmployeeRegisterRequestDto request)
         {
             var result = await _authService.EmployeeRegister(request);
@@ -33,10 +34,22 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Route("employeeLogin")]
+        [Route("employee/login")]
         public async Task<IActionResult> EmployeeLogin([FromBody] EmployeeLoginRequestDto request)
         {
             var result = await _authService.EmployeeLogin(request);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return Unauthorized("Invalid email or password");
+        }
+
+        [HttpPost]
+        [Route("admin/login")]
+        public async Task<IActionResult> AdminLogin([FromBody] AdminLoginRequestDto request)
+        {
+            var result = await _authService.AdminLogin(request);
             if (result != null)
             {
                 return Ok(result);
